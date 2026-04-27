@@ -15,12 +15,15 @@ diff --git a/Android.bp b/Android.bp
 index 5efee517..be7e93e6 100644
 --- a/Android.bp
 +++ b/Android.bp
-@@ -151,6 +151,6 @@ android_app {
+@@ -151,8 +151,9 @@ android_app {
      platform_apis: true,
      manifest: "AndroidManifest.xml",
      additional_manifests: [":WallpaperPicker2_Manifest"],
--    overrides: ["WallpaperPicker", "WallpaperPicker2"],
-+    overrides: ["WallpaperCropper", "WallpaperPicker", "WallpaperPicker2"],
+     overrides: [
++        "WallpaperCropper",
+         "WallpaperPicker",
+         "WallpaperPicker2",
+     ],
      static_libs: ["ThemePickerApplicationLib"],
  }
 -- 

@@ -1,28 +1,29 @@
-From d5355a8a08d7f7cfa2e5632b8bd11b1b7614fa49 Mon Sep 17 00:00:00 2001
-From: Luca Stefani <luca.stefani.ge1@gmail.com>
-Date: Fri, 1 Nov 2019 23:17:59 +0100
-Subject: [PATCH 3/3] Properly expose GridCustomizationsProvider
+From 12612c534b17d6a716e013eb038ebc001bb63228 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 01:50:04 -0300
+Subject: [PATCH] Properly expose GridCustomizationsProvider
 
-Change-Id: I8268a215257ae0e399c56ac8b44cdfdff8cc92a0
 ---
- AndroidManifest-common.xml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ AndroidManifest-common.xml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/AndroidManifest-common.xml b/AndroidManifest-common.xml
-index 46f0e41cdb..f728b76176 100644
+index c28ca1b..4699078 100644
 --- a/AndroidManifest-common.xml
 +++ b/AndroidManifest-common.xml
-@@ -136,7 +136,9 @@
+@@ -127,8 +127,10 @@
+          -->
+         <provider
              android:name="com.android.launcher3.graphics.LauncherCustomizationProvider"
-             android:authorities="${applicationId}.grid_control"
-             android:permission="android.permission.BIND_WALLPAPER"
+-            android:authorities="${applicationId}.grid_control"
 -            android:exported="true" />
++            android:authorities=".grid_control"
 +            android:exported="true"
-+            android:writePermission="${packageName}.permission.WRITE_SETTINGS"
-+            android:readPermission="${packageName}.permission.READ_SETTINGS"/>
++            android:writePermission=".permission.WRITE_SETTINGS"
++            android:readPermission=".permission.READ_SETTINGS"/>
  
          <!--
          The settings activity. To extend point settings_fragment_name to appropriate fragment class
 -- 
-2.43.0
+2.53.0.windows.3
 

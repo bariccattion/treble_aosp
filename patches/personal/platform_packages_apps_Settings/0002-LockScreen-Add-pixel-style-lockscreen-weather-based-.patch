@@ -50,10 +50,10 @@ Co-authored-by: rmp22 <195054967+rmp22@users.noreply.github.com>
  create mode 100644 src/com/android/settings/omnijaws/LockScreenWeatherPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 0c5bedca93d..145c2359342 100644
+index 67f6fe6..3316180 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -13365,6 +13365,11 @@ Data usage charges may apply.</string>
+@@ -13806,6 +13806,11 @@
          <item quantity="other"><xliff:g id="first">%1$s</xliff:g>, <xliff:g id="second">%2$s</xliff:g></item>
      </plurals>
  
@@ -64,12 +64,12 @@ index 0c5bedca93d..145c2359342 100644
 +
      <!-- Title for RTT setting. [CHAR LIMIT=NONE] -->
      <string name="rtt_settings_title"></string>
-     <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
+     <!-- Subtext for the RTT settings that explains what RTT settings is [CHAR LIMIT=NONE]-->
 diff --git a/res/xml/security_lockscreen_settings.xml b/res/xml/security_lockscreen_settings.xml
-index 9b9df3e29f0..851aeda02ed 100644
+index 2881969..0c4e6a7 100644
 --- a/res/xml/security_lockscreen_settings.xml
 +++ b/res/xml/security_lockscreen_settings.xml
-@@ -89,6 +89,13 @@
+@@ -88,6 +88,13 @@
              android:title="@string/lockscreen_double_line_clock_setting_toggle"
              android:summary="@string/lockscreen_double_line_clock_summary"
              settings:controller="com.android.settings.display.LockscreenClockPreferenceController" />
@@ -85,7 +85,7 @@ index 9b9df3e29f0..851aeda02ed 100644
      <PreferenceCategory
 diff --git a/src/com/android/settings/omnijaws/LockScreenWeatherPreferenceController.java b/src/com/android/settings/omnijaws/LockScreenWeatherPreferenceController.java
 new file mode 100644
-index 00000000000..542094437ec
+index 0000000..5420944
 --- /dev/null
 +++ b/src/com/android/settings/omnijaws/LockScreenWeatherPreferenceController.java
 @@ -0,0 +1,79 @@
@@ -169,7 +169,7 @@ index 00000000000..542094437ec
 +    }
 +}
 diff --git a/src/com/android/settings/security/LockscreenDashboardFragment.java b/src/com/android/settings/security/LockscreenDashboardFragment.java
-index ef4c778549c..78c78bad9c4 100644
+index ef4c778..78c78ba 100644
 --- a/src/com/android/settings/security/LockscreenDashboardFragment.java
 +++ b/src/com/android/settings/security/LockscreenDashboardFragment.java
 @@ -33,6 +33,8 @@ import androidx.annotation.NonNull;
@@ -235,5 +235,5 @@ index ef4c778549c..78c78bad9c4 100644
 +    }
  }
 -- 
-2.43.0
+2.53.0.windows.3
 
