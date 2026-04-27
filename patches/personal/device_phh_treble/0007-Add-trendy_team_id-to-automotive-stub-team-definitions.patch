@@ -1,0 +1,35 @@
+From cb34b047e9cc753fbd3802db2af41324bc280d2c Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 15:44:24 -0300
+Subject: [PATCH] Add trendy_team_id to automotive stub team definitions
+
+Empty team definitions without trendy_team_id cause a nil pointer
+dereference in Soong's all_teams.go lookupTeamForAllModules when
+modules fall back to the default team lookup.
+---
+ automotive_stubs/Android.bp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+index 454a464..57ae76a 100644
+--- a/automotive_stubs/Android.bp
++++ b/automotive_stubs/Android.bp
+@@ -5,12 +5,15 @@ package {
+ // Teams
+ team {
+     name: "trendy_team_aaos_power_triage",
++    trendy_team_id: "0000000000000001",
+ }
+ team {
+     name: "trendy_team_aaos_carframework_triage",
++    trendy_team_id: "0000000000000002",
+ }
+ team {
+     name: "trendy_team_aaos_audio_triage",
++    trendy_team_id: "0000000000000003",
+ }
+ 
+ // CC Defaults
+-- 
+2.53.0.windows.3
+

@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Surface Duo Builder <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 00:00:00 +0000
+Subject: [PATCH] Remove car settings flags dependency from CTS settings test
+
+Car packages are removed for GSI build, so car settings flags lib
+no longer exists.
+---
+ tests/tests/settings/Android.bp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tests/tests/settings/Android.bp b/tests/tests/settings/Android.bp
+index 1234567..abcdefg 100644
+--- a/tests/tests/settings/Android.bp
++++ b/tests/tests/settings/Android.bp
+@@ -42,7 +42,6 @@ android_test {
+         "truth",
+         "telephony_flags_core_java_lib",
+         "camera_platform_flags_java_lib",
+-        "com_android_car_settings_flags_lib",
+         "cts-install-lib",
+     ],
+ 

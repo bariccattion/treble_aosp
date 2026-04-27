@@ -1,0 +1,24 @@
+From 9ae330cc7050b885361afd414559d7dd248e14f4 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 07:26:10 -0300
+Subject: [PATCH] Remove
+
+---
+ hostsidetests/car/Android.bp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hostsidetests/car/Android.bp b/hostsidetests/car/Android.bp
+index bdc1d8b..c0a430f 100644
+--- a/hostsidetests/car/Android.bp
++++ b/hostsidetests/car/Android.bp
+@@ -46,7 +46,6 @@ java_test_host {
+         "automotive-general-tests",
+     ],
+     static_libs: [
+-        "android.car.feature-aconfig-java-host",
+         "car-cts-host-util",
+         "cts-statsd-atom-host-test-utils",
+         "flag-junit-host",
+-- 
+2.53.0.windows.3
+

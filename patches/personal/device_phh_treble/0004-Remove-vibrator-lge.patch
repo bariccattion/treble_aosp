@@ -1,0 +1,35 @@
+From a824dae780a957280265c02cf5c8e34c5e4e9fbb Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 09:00:31 -0300
+Subject: [PATCH] Remove vibrator-lge binary completely
+
+---
+ cmds/Android.bp | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/cmds/Android.bp b/cmds/Android.bp
+index df2625f..096401c 100644
+--- a/cmds/Android.bp
++++ b/cmds/Android.bp
+@@ -37,18 +37,6 @@ cc_binary {
+ 	host_supported: true,
+ }
+ 
+-cc_binary {
+-	name: "vibrator-lge",
+-	srcs: [
+-		"vibrator-lge.cpp",
+-	],
+-	shared_libs: [
+-		"vendor.lge.hardware.vibrator@1.0",
+-		"libutils",
+-		"libhidlbase",
+-	],
+-}
+-
+ cc_binary {
+ 	name: "mtk-sms-fwk-ready",
+ 	srcs: [
+-- 
+2.53.0.windows.3
+

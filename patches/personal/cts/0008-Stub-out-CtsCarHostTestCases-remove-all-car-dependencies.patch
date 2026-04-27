@@ -1,0 +1,66 @@
+From 96d9940b1f93ae0f69ca638582534445aaa2aefd Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 13:16:31 -0300
+Subject: [PATCH] Stub out CtsCarHostTestCases - remove all car dependencies
+
+packages/services/Car is removed for GSI build. All car proto and service module dependencies are unavailable. Stub out the entire module definition.
+---
+ hostsidetests/car/Android.bp | 45 +-----------------------------------
+ 1 file changed, 1 insertion(+), 44 deletions(-)
+
+diff --git a/hostsidetests/car/Android.bp b/hostsidetests/car/Android.bp
+index 215ad68..ea0f4df 100644
+--- a/hostsidetests/car/Android.bp
++++ b/hostsidetests/car/Android.bp
+@@ -14,47 +14,4 @@
+ 
+ package {
+     default_applicable_licenses: ["Android-Apache-2.0"],
+-    default_team: "trendy_team_aaos_framework",
+-}
+-
+-java_test_host {
+-    name: "CtsCarHostTestCases",
+-    defaults: ["cts_defaults"],
+-    // Only compile source java files in this apk.
+-    srcs: [
+-        "src/**/*.java",
+-        "app/src/android/car/cts/app/PowerPolicyTestCommandStatus.java",
+-        "app/src/android/car/cts/app/PowerPolicyTestCommandType.java",
+-        ":cartelemetryservice-proto-srcs",
+-        ":car-service-dump-proto-srcs",
+-    ],
+-    proto: {
+-        type: "lite",
+-    },
+-    libs: [
+-        "compatibility-host-util",
+-        "cts-tradefed",
+-        "libprotobuf-java-full",
+-        "tradefed",
+-        "truth",
+-    ],
+-    // tag this module as a cts test artifact
+-    test_suites: [
+-        "cts",
+-        "general-tests",
+-        "automotive-tests",
+-        "automotive-general-tests",
+-    ],
+-    static_libs: [
+-        "car-cts-host-util",
+-        "cts-statsd-atom-host-test-utils",
+-        "flag-junit-host",
+-    ],
+-    device_common_data: [
+-        ":CtsStatsdAtomApp",
+-        ":CtsCarApp",
+-        ":CtsCarWatchdogSharedApp",
+-        ":CtsCarWatchdogSecondSharedApp",
+-        ":CtsCarWatchdogDeviceTestApp",
+-    ],
+-}
++}
+\ No newline at end of file
+-- 
+2.53.0.windows.3

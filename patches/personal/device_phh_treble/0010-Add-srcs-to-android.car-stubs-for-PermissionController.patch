@@ -1,0 +1,32 @@
+From 3bdb825a33effbef56611058aec595c42d6be103 Mon Sep 17 00:00:00 2001
+From: Sisyphus <sisyphus@ohmyopencode.dev>
+Date: Sun, 26 Apr 2026 12:00:00 +0000
+Subject: [PATCH] Add srcs to android.car-stubs for PermissionController
+ dependency
+
+PermissionController depends on android.car-stubs (not android.car).
+Add the same source files to android.car-stubs so the stubs are
+available on PermissionController's classpath.
+---
+ automotive_stubs/Android.bp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+index b5518ad..1ab7c4a 100644
+--- a/automotive_stubs/Android.bp
++++ b/automotive_stubs/Android.bp
+@@ -93,6 +93,11 @@ java_library {
+ }
+ java_library {
+     name: "android.car-stubs",
++    srcs: [
++        "src/android/car/Car.java",
++        "src/android/car/drivingstate/CarUxRestrictions.java",
++        "src/android/car/drivingstate/CarUxRestrictionsManager.java",
++    ],
+     sdk_version: "current",
+     installable: false,
+ }
+-- 
+2.53.0.windows.3
+

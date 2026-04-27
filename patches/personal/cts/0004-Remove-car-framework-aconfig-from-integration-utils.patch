@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Surface Duo Builder <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 00:00:00 +0000
+Subject: [PATCH] Remove car-framework-aconfig from CarIntegrationTestUtilsLib
+
+Car packages removed for GSI build, so car-framework-aconfig-libraries
+module no longer exists.
+---
+ tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp b/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
+index 616dc89..dbc7d05 100644
+--- a/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
++++ b/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
+@@ -21,7 +21,6 @@ package {
+ java_library {
+     name: "car-integration-test-utils-lib",
+     defaults: [
+-        "car-framework-aconfig-libraries",
+     ],
+     srcs: [
+         "src/android/car/cts/utils/*.java",
+-- 
+2.34.1

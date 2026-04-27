@@ -1,0 +1,21 @@
+From b3b0611e14d66059fcb7f9af8d69bf57a89ed513 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 07:24:41 -0300
+Subject: [PATCH] Remove
+
+---
+ emulator/audio/halservice/Android.bp | 0
+ emulator/vhal_v2_0/Android.bp        | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 emulator/audio/halservice/Android.bp
+ delete mode 100644 emulator/vhal_v2_0/Android.bp
+
+diff --git a/emulator/audio/halservice/Android.bp b/emulator/audio/halservice/Android.bp
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/emulator/vhal_v2_0/Android.bp b/emulator/vhal_v2_0/Android.bp
+deleted file mode 100644
+index e69de29..0000000
+-- 
+2.53.0.windows.3
+

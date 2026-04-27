@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Surface Duo Builder <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 00:00:00 +0000
+Subject: [PATCH] Remove car-framework-aconfig dependency from CarSecurityPermissionTest
+
+Car packages removed for GSI build, so car-framework-aconfig-libraries
+module no longer exists.
+---
+ tests/tests/car_permission_tests/Android.bp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tests/tests/car_permission_tests/Android.bp b/tests/tests/car_permission_tests/Android.bp
+index 0f50591..c3fbd82 100644
+--- a/tests/tests/car_permission_tests/Android.bp
++++ b/tests/tests/car_permission_tests/Android.bp
+@@ -23,7 +23,6 @@ android_test {
+     team: "trendy_team_aaos_framework",
+ 
+     defaults: [
+-        "car-framework-aconfig-libraries",
+     ],
+     srcs: [
+         "src/**/*.java",
+-- 
+2.34.1

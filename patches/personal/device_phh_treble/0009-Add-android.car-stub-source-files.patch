@@ -1,0 +1,157 @@
+From f6acb2b4acecf5088461c71a4f6ef63b61db5754 Mon Sep 17 00:00:00 2001
+From: Sisyphus <sisyphus@ohmyopencode.dev>
+Date: Sun, 26 Apr 2026 10:00:00 +0000
+Subject: [PATCH] Add android.car stub sources for Car and
+ CarUxRestrictionsManager
+
+PermissionController's DrivingDecisionReminderService.kt imports
+android.car.Car and android.car.drivingstate.CarUxRestrictionsManager
+which are provided by the removed Car service. Add stub implementations
+so the code compiles without Car service.
+---
+ automotive_stubs/Android.bp                   |  5 +++
+ automotive_stubs/src/android/car/Car.java     | 44 +++++++++++++++++++
+ .../car/drivingstate/CarUxRestrictions.java   | 24 ++++++++++
+ .../CarUxRestrictionsManager.java             | 32 ++++++++++++++
+ 4 files changed, 105 insertions(+)
+ create mode 100644 automotive_stubs/src/android/car/Car.java
+ create mode 100644 automotive_stubs/src/android/car/drivingstate/CarUxRestrictions.java
+ create mode 100644 automotive_stubs/src/android/car/drivingstate/CarUxRestrictionsManager.java
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+index afb2745..b5518ad 100644
+--- a/automotive_stubs/Android.bp
++++ b/automotive_stubs/Android.bp
+@@ -83,6 +83,11 @@ java_defaults {
+ // Java Libraries
+ java_library {
+     name: "android.car",
++    srcs: [
++        "src/android/car/Car.java",
++        "src/android/car/drivingstate/CarUxRestrictions.java",
++        "src/android/car/drivingstate/CarUxRestrictionsManager.java",
++    ],
+     sdk_version: "current",
+     installable: false,
+ }
+diff --git a/automotive_stubs/src/android/car/Car.java b/automotive_stubs/src/android/car/Car.java
+new file mode 100644
+index 0000000..e4176a8
+--- /dev/null
++++ b/automotive_stubs/src/android/car/Car.java
+@@ -0,0 +1,44 @@
++/*
++ * Copyright (C) 2024 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.car;
++
++import android.content.Context;
++import android.os.Handler;
++
++public class Car {
++
++    public static final String CAR_UX_RESTRICTION_SERVICE = "uxrestriction";
++    public static final long CAR_WAIT_TIMEOUT_DO_NOT_WAIT = 0;
++
++    @Deprecated
++    public static Car createCar(Context context, Handler handler, long waitTimeoutMs,
++            CarServiceLifecycleListener callback) {
++        callback.onLifecycleChanged(null, false);
++        return null;
++    }
++
++    public Object getCarManager(String serviceName) {
++        return null;
++    }
++
++    public void disconnect() {}
++
++    @Deprecated
++    public interface CarServiceLifecycleListener {
++        void onLifecycleChanged(Car car, boolean ready);
++    }
++}
+diff --git a/automotive_stubs/src/android/car/drivingstate/CarUxRestrictions.java b/automotive_stubs/src/android/car/drivingstate/CarUxRestrictions.java
+new file mode 100644
+index 0000000..2fe3eae
+--- /dev/null
++++ b/automotive_stubs/src/android/car/drivingstate/CarUxRestrictions.java
+@@ -0,0 +1,24 @@
++/*
++ * Copyright (C) 2024 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.car.drivingstate;
++
++public class CarUxRestrictions {
++
++    public boolean isRequiresDistractionOptimization() {
++        return false;
++    }
++}
+diff --git a/automotive_stubs/src/android/car/drivingstate/CarUxRestrictionsManager.java b/automotive_stubs/src/android/car/drivingstate/CarUxRestrictionsManager.java
+new file mode 100644
+index 0000000..320c855
+--- /dev/null
++++ b/automotive_stubs/src/android/car/drivingstate/CarUxRestrictionsManager.java
+@@ -0,0 +1,32 @@
++/*
++ * Copyright (C) 2024 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.car.drivingstate;
++
++public class CarUxRestrictionsManager {
++
++    public CarUxRestrictions getCurrentCarUxRestrictions() {
++        return null;
++    }
++
++    public void registerListener(OnUxRestrictionsChangedListener listener) {}
++
++    public void unregisterListener() {}
++
++    public interface OnUxRestrictionsChangedListener {
++        void onUxRestrictionsChanged(CarUxRestrictions restrictions);
++    }
++}
+-- 
+2.53.0.windows.3
+

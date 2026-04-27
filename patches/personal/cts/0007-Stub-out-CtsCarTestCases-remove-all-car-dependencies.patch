@@ -1,0 +1,80 @@
+From 153388e806467c2952c7ce1e2b5289c3f591b8e9 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 13:16:03 -0300
+Subject: [PATCH] Stub out CtsCarTestCases - remove all car dependencies
+
+packages/services/Car is removed for GSI build. All car proto and service module dependencies are unavailable. Stub out the entire module definition.
+---
+ tests/tests/car/Android.bp | 59 +-------------------------------------
+ 1 file changed, 1 insertion(+), 58 deletions(-)
+
+diff --git a/tests/tests/car/Android.bp b/tests/tests/car/Android.bp
+index 51bd0f0..9b0265b 100644
+--- a/tests/tests/car/Android.bp
++++ b/tests/tests/car/Android.bp
+@@ -14,61 +14,4 @@
+ 
+ package {
+     default_applicable_licenses: ["Android-Apache-2.0"],
+-}
+-
+-android_test {
+-    name: "CtsCarTestCases",
+-    team: "trendy_team_aaos_framework",
+-    defaults: [
+-        "cts_defaults",
+-    ],
+-    static_libs: [
+-        "android.car.test.utils",
+-        "android.car.testapi",
+-        "androidx.test.core",
+-        "androidx.test.rules",
+-        "androidx.test.uiautomator_uiautomator",
+-        "android-support-v4",
+-        "bluetooth-test-util-lib",
+-        "car-integration-test-utils-lib",
+-        "compatibility-device-util-axt",
+-        "truth",
+-        "ctstestrunner-axt",
+-        "libprotobuf-java-lite",
+-        "framework-annotations-lib",
+-        "hamcrest-library",
+-        "platform-test-annotations",
+-        "flag-junit",
+-        "bedstead",
+-        "TestParameterInjector",
+-    ],
+-    libs: [
+-        "android.test.base.stubs.test",
+-        "android.car-test-stubs",
+-    ],
+-    srcs: [
+-        "src/**/*.java",
+-        ":cartelemetryservice-proto-srcs",
+-        ":rotary-service-proto-source",
+-        ":car-service-dump-proto-srcs",
+-        ":native-dump-proto-srcs",
+-    ],
+-    // Tag this module as a cts test artifact
+-    test_suites: [
+-        "cts",
+-        "general-tests",
+-        "automotive-tests",
+-        "automotive-general-tests",
+-    ],
+-    sdk_version: "test_current",
+-    per_testcase_directory: true,
+-    certificate: ":cts-testkey1",
+-    data: [
+-        ":CtsCarDisplayCompatApp",
+-        ":CtsCarDeprecatedSdkApp",
+-        ":CtsCarOverlayWindowTestAppSdk22",
+-    ],
+-    java_resources: [
+-        ":CarSvcProps_JSON",
+-    ],
+-}
++}
+\ No newline at end of file
+-- 
+2.53.0.windows.3

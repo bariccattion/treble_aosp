@@ -1,0 +1,181 @@
+From e7068a8db1c5a2ed3755a186549493b18946956a Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 18:58:10 -0300
+Subject: [PATCH] Replace libkeyutils stub with full implementation from AOSP
+ 15
+
+libkeyutils was removed from AOSP 16 but is still needed by init
+(patch 0027 reverts the session keyring workaround removal). Replace
+the empty stub with the full AOSP 15 implementation including
+keyutils.h header and keyutils.cpp source, with proper
+export_include_dirs.
+---
+ automotive_stubs/Android.bp         |  7 +++
+ automotive_stubs/include/keyutils.h | 60 ++++++++++++++++++++++++++
+ automotive_stubs/keyutils.cpp       | 67 +++++++++++++++++++++++++++++
+ 3 files changed, 134 insertions(+)
+ create mode 100644 automotive_stubs/include/keyutils.h
+ create mode 100644 automotive_stubs/keyutils.cpp
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+index 57ae76a..fdf6e88 100644
+--- a/automotive_stubs/Android.bp
++++ b/automotive_stubs/Android.bp
+@@ -62,6 +62,13 @@ cc_library {
+     vendor_available: true,
+     host_supported: true,
+     recovery_available: true,
++    ramdisk_available: true,
++    vendor_ramdisk_available: true,
++    export_include_dirs: ["include"],
++    local_include_dirs: ["include"],
++    srcs: ["keyutils.cpp"],
++    stl: "none",
++    cflags: ["-Werror"],
+ }
+ cc_library {
+     name: "android.automotive.watchdog-V2-ndk",
+diff --git a/automotive_stubs/include/keyutils.h b/automotive_stubs/include/keyutils.h
+new file mode 100644
+index 0000000..65c6a4f
+--- /dev/null
++++ b/automotive_stubs/include/keyutils.h
+@@ -0,0 +1,60 @@
++/*
++ * Copyright (C) 2017 The Android Open Source Project
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *  * Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *  * Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in
++ *    the documentation and/or other materials provided with the
++ *    distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
++ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
++ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
++ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
++ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
++ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ */
++
++#ifndef _KEYUTILS_H_
++#define _KEYUTILS_H_
++
++#include <linux/keyctl.h>
++#include <stdint.h>
++#include <sys/cdefs.h>
++
++__BEGIN_DECLS
++
++typedef int32_t key_serial_t;
++
++key_serial_t add_key(const char* type, const char* description, const void* payload,
++                     size_t payload_length, key_serial_t ring_id);
++
++key_serial_t keyctl_get_keyring_ID(key_serial_t id, int create);
++
++long keyctl_revoke(key_serial_t id);
++
++long keyctl_search(key_serial_t ring_id, const char* type, const char* description,
++                   key_serial_t dest_ring_id);
++
++long keyctl_setperm(key_serial_t id, int permissions);
++
++long keyctl_unlink(key_serial_t key, key_serial_t keyring);
++
++long keyctl_restrict_keyring(key_serial_t keyring, const char* type, const char* restriction);
++
++long keyctl_get_security(key_serial_t key, char* buffer, size_t buflen);
++
++__END_DECLS
++
++#endif
+\ No newline at end of file
+diff --git a/automotive_stubs/keyutils.cpp b/automotive_stubs/keyutils.cpp
+new file mode 100644
+index 0000000..f1ecf03
+--- /dev/null
++++ b/automotive_stubs/keyutils.cpp
+@@ -0,0 +1,67 @@
++/*
++ * Copyright (C) 2017 The Android Open Source Project
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *  * Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *  * Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in
++ *    the documentation and/or other materials provided with the
++ *    distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
++ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
++ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
++ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
++ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
++ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ */
++
++#include <keyutils.h>
++
++#include <stdlib.h>
++#include <sys/syscall.h>
++#include <unistd.h>
++
++key_serial_t add_key(const char* type, const char* description, const void* payload,
++                     size_t payload_length, key_serial_t ring_id) {
++  return syscall(__NR_add_key, type, description, payload, payload_length, ring_id);
++}
++
++key_serial_t keyctl_get_keyring_ID(key_serial_t id, int create) {
++  return syscall(__NR_keyctl, KEYCTL_GET_KEYRING_ID, id, create);
++}
++
++long keyctl_revoke(key_serial_t id) {
++  return syscall(__NR_keyctl, KEYCTL_REVOKE, id);
++}
++
++long keyctl_search(key_serial_t ring_id, const char* type, const char* description,
++                   key_serial_t dest_ring_id) {
++  return syscall(__NR_keyctl, KEYCTL_SEARCH, ring_id, type, description, dest_ring_id);
++}
++
++long keyctl_setperm(key_serial_t id, int permissions) {
++  return syscall(__NR_keyctl, KEYCTL_SETPERM, id, permissions);
++}
++
++long keyctl_unlink(key_serial_t key, key_serial_t keyring) {
++  return syscall(__NR_keyctl, KEYCTL_UNLINK, key, keyring);
++}
++
++long keyctl_restrict_keyring(key_serial_t keyring, const char* type, const char* restriction) {
++  return syscall(__NR_keyctl, KEYCTL_RESTRICT_KEYRING, keyring, type, restriction);
++}
++
++long keyctl_get_security(key_serial_t key, char* buffer, size_t buflen) {
++  return syscall(__NR_keyctl, KEYCTL_GET_SECURITY, key, buffer, buflen);
++}
+\ No newline at end of file
+-- 
+2.53.0.windows.3
+

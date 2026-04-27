@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Surface Duo Builder <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 00:00:00 +0000
+Subject: [PATCH] Remove car-framework-aconfig dependency from CtsCarTestCases
+
+Car packages removed for GSI build, so car-framework-aconfig-libraries
+module no longer exists.
+---
+ tests/tests/car/Android.bp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tests/tests/car/Android.bp b/tests/tests/car/Android.bp
+index 1234567..abcdefg 100644
+--- a/tests/tests/car/Android.bp
++++ b/tests/tests/car/Android.bp
+@@ -21,7 +21,6 @@ android_test {
+     team: "trendy_team_aaos_framework",
+     defaults: [
+         "cts_defaults",
+-        "car-framework-aconfig-libraries",
+     ],
+     static_libs: [
+         "android.car.test.utils",
+-- 
+2.34.1

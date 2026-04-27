@@ -1,0 +1,158 @@
+From 6f1893ee21a7ed7509acfbf3a347df6bb94d0ea4 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 09:22:30 -0300
+Subject: [PATCH] Add automotive and keyutils stubs
+
+---
+ automotive_stubs/Android.bp | 135 +++
+ automotive_stubs/empty.txt  |   0
+ 2 files changed, 135 insertions(+)
+ create mode 100644 automotive_stubs/Android.bp
+ create mode 100644 automotive_stubs/empty.txt
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+new file mode 100644
+index 0000000..ccd0b2a
+--- /dev/null
++++ b/automotive_stubs/Android.bp
+@@ -0,0 +1,135 @@
++package {
++    default_applicable_licenses: ["Android-Apache-2.0"],
++}
++
++// Teams
++team {
++    name: "trendy_team_aaos_power_triage",
++}
++team {
++    name: "trendy_team_aaos_carframework_triage",
++}
++team {
++    name: "trendy_team_aaos_audio_triage",
++}
++
++// CC Defaults
++license {
++    name: "android-automotive-large-parcelable-license",
++    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
++}
++cc_defaults {
++    name: "android-automotive-large-parcelable-defaults",
++}
++cc_defaults {
++    name: "libwatchdog_perf_service_defaults",
++}
++cc_defaults {
++    name: "carwatchdogd_defaults",
++}
++cc_defaults {
++    name: "vhalclient_defaults",
++}
++cc_defaults {
++    name: "powerpolicyclient_defaults",
++}
++
++// CC Libraries
++android_library {
++    name: "audiocontrol-caremu",
++    sdk_version: "current",
++}
++cc_library {
++    name: "android-automotive-large-parcelable-lib",
++    vendor_available: true,
++    host_supported: true,
++}
++cc_library {
++    name: "libvhalclient",
++    vendor_available: true,
++    host_supported: true,
++}
++cc_library {
++    name: "libwatchdog_perf_service",
++    vendor_available: true,
++    host_supported: true,
++}
++cc_library {
++    name: "libkeyutils",
++    vendor_available: true,
++    host_supported: true,
++    recovery_available: true,
++}
++cc_library {
++    name: "android.automotive.watchdog-V2-ndk",
++    vendor_available: true,
++}
++
++// Java Defaults
++java_defaults {
++    name: "car-framework-aconfig-libraries",
++}
++
++// Java Libraries
++java_library {
++    name: "android.car",
++    installable: false,
++}
++java_library {
++    name: "android.car-stubs",
++    installable: false,
++}
++java_library {
++    name: "android.car-test-stubs",
++    installable: false,
++}
++java_library {
++    name: "android.car.builtin.impl",
++    installable: false,
++}
++java_library {
++    name: "android.car.builtin.stubs.module_lib",
++    installable: false,
++}
++java_library {
++    name: "android.car.watchdoglib",
++    installable: false,
++}
++java_library {
++    name: "android.car.test.utils",
++    installable: false,
++}
++java_library {
++    name: "android.car.testapi",
++    installable: false,
++}
++java_library {
++    name: "android.automotive.watchdog.internal-java",
++    installable: false,
++}
++java_library {
++    name: "android.car-system-stubs",
++    installable: false,
++}
++java_library_host {
++    name: "android.car.feature-aconfig-java-host",
++}
++java_library {
++    name: "android.car.feature-aconfig-java",
++    installable: false,
++}
++java_library {
++    name: "com_android_car_settings_flags_lib",
++    installable: false,
++}
++android_test {
++    name: "CarDeveloperOptionsUnitTests",
++}
++filegroup {
++    name: "car-api-system-current.txt",
++    srcs: ["empty.txt"],
++}
++filegroup {
++    name: "car-api-system-removed.txt",
++    srcs: ["empty.txt"],
++}
+diff --git a/automotive_stubs/empty.txt b/automotive_stubs/empty.txt
+new file mode 100644
+index e69de29..e69de29
+--- /dev/null
++++ b/automotive_stubs/empty.txt

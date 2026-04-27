@@ -1,0 +1,82 @@
+From 7ba2c35d95076e960ae4c0331b28737a2d2876fe Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 13:42:10 -0300
+Subject: [PATCH] Add sdk_version to car java_library stubs
+
+The car java_library stubs need sdk_version: current to avoid private vs module API mismatch errors from Soong.
+---
+ automotive_stubs/Android.bp | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/automotive_stubs/Android.bp b/automotive_stubs/Android.bp
+index e17c7e7..454a464 100644
+--- a/automotive_stubs/Android.bp
++++ b/automotive_stubs/Android.bp
+@@ -73,42 +73,52 @@ java_defaults {
+ // Java Libraries
+ java_library {
+     name: "android.car",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car-stubs",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car-test-stubs",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car.builtin.impl",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car.builtin.stubs.module_lib",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car.watchdoglib",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car.test.utils",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car.testapi",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.automotive.watchdog.internal-java",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "android.car-system-stubs",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library_host {
+@@ -116,10 +126,12 @@ java_library_host {
+ }
+ java_library {
+     name: "android.car.feature-aconfig-java",
++    sdk_version: "current",
+     installable: false,
+ }
+ java_library {
+     name: "com_android_car_settings_flags_lib",
++    sdk_version: "current",
+     installable: false,
+ }
+ android_test {
+-- 
+2.53.0.windows.3

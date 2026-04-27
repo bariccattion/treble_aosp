@@ -1,0 +1,25 @@
+From 570e3e0b575afe2e51bb9476895ca43d42e37744 Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 13:02:35 -0300
+Subject: [PATCH] Remove CarSvcProps_JSON from CTS car integration test utils
+
+packages/services/Car is removed for GSI build, so CarSvcProps_JSON module no longer exists.
+---
+ tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp b/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
+index 2279877..c5fd747 100644
+--- a/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
++++ b/tests/tests/car/lib/CarIntegrationTestUtilsLib/Android.bp
+@@ -39,8 +39,5 @@ java_library {
+         "android.car-test-stubs",
+         "framework-annotations-lib",
+     ],
+-    java_resources: [
+-        ":CarSvcProps_JSON",
+-    ],
+     sdk_version: "test_current",
+ }
+-- 
+2.53.0.windows.3
