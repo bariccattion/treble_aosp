@@ -97,18 +97,18 @@ index 8cfd597d9..cb3700a7f 100644
          "libprocessgroup",
          "libselinux",
 diff --git a/init/init.cpp b/init/init.cpp
-index f6b294136..de80807e0 100644
+index 08e7c66..7de53f9 100644
 --- a/init/init.cpp
 +++ b/init/init.cpp
-@@ -52,6 +52,7 @@
- #include <android-base/thread_annotations.h>
+@@ -53,6 +53,7 @@
+ #include <com_android_apex_flags.h>
  #include <fs_avb/fs_avb.h>
  #include <fs_mgr_vendor_overlay.h>
 +#include <keyutils.h>
  #include <libavb/libavb.h>
+ #include <libdm/loop_control.h>
  #include <libgsi/libgsi.h>
- #include <libsnapshot/snapshot.h>
-@@ -1000,6 +1001,11 @@ int SecondStageMain(int argc, char** argv) {
+@@ -1088,6 +1089,11 @@ int SecondStageMain(int argc, char** argv) {
                     << " to /proc/1/oom_score_adj: " << result.error();
      }
  
@@ -121,5 +121,5 @@ index f6b294136..de80807e0 100644
      close(open("/dev/.booting", O_WRONLY | O_CREAT | O_CLOEXEC, 0000));
  
 -- 
-2.43.0
+2.53.0.windows.3
 
