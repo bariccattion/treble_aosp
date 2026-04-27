@@ -2,7 +2,7 @@
 
 echo
 echo "--------------------------------------"
-echo "          AOSP 16.0 Syncbot           "
+echo "        AOSP 16.0.0_r4 Syncbot        "
 echo "                  by                  "
 echo "                ponces                "
 echo "--------------------------------------"
@@ -10,7 +10,7 @@ echo
 
 set -e
 
-export TD_BRANCH="android-16.0"
+export TD_BRANCH="android-16.0.0_r4"
 
 [ -z "$OUTPUT_DIR" ] && OUTPUT_DIR="$PWD/output"
 [ -z "$BUILD_ROOT" ] && BUILD_ROOT="$PWD/treble_aosp"

@@ -1,0 +1,22 @@
+# Build output
+output/
+aosp-src/
+*.img
+*.img.xz
+*.zip
+
+# Editor/IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+temp/
