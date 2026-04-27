@@ -5,23 +5,22 @@ Subject: [PATCH 2/3] Additional bpf-less handling
 
 Change-Id: I889334a28d8d484cef9d9e8a8e0ea0aa2c0b47ac
 ---
- loader/Loader.cpp | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ loader/bpfloader.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/loader/Loader.cpp b/loader/Loader.cpp
-index 883202b..464e490 100644
---- a/loader/Loader.cpp
-+++ b/loader/Loader.cpp
-@@ -977,7 +977,8 @@ void initLogging() {
- void createBpfFsSubDirectories() {
-     for (const auto& location : android::bpf::locations) {
-         if (android::bpf::createSysFsBpfSubDir(location.prefix)) {
--            exit(120);
-+            ALOGE("=== CRITICIL FAILURE creating BPF subdir %s", location.prefix);
-+            //exit(120);
-         }
-     }
- }
+diff --git a/loader/bpfloader.rs b/loader/bpfloader.rs
+index a9e599a..4d9adc0 100644
+--- a/loader/bpfloader.rs
++++ b/loader/bpfloader.rs
+@@ -671,7 +671,7 @@ fn main() {
+     info!("Loading legacy BPF progs");
+ 
+     if let Err(e) = create_dir(Path::new("/sys/fs/bpf/vendor")) {
+-        panic!("Error during mkdir /sys/fs/bpf/vendor: {e}");
++        error!("Error during mkdir /sys/fs/bpf/vendor: {e}");
+     };
+ 
+     // SAFETY: Linking in the existing legacy vendor bpfloader functionality.
 -- 
-2.43.0
+2.53.0.windows.3
 
