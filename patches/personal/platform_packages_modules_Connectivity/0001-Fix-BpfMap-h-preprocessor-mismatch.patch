@@ -1,0 +1,31 @@
+From c99feaceaa6cd83110a1c7a9f69611ca58127a31 Mon Sep 17 00:00:00 2001
+From: Sisyphus <sisyphus@ohmyopencode.dev>
+Date: Sat, 25 Apr 2026 14:00:00 +0000
+Subject: [PATCH] Fix BpfMap.h preprocessor mismatch from TrebleDroid patch
+ 0002
+
+---
+ bpf/headers/include/bpf/BpfMap.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/bpf/headers/include/bpf/BpfMap.h b/bpf/headers/include/bpf/BpfMap.h
+index a45e3c6..717712d 100644
+--- a/bpf/headers/include/bpf/BpfMap.h
++++ b/bpf/headers/include/bpf/BpfMap.h
+@@ -54,10 +54,9 @@ void Abort(int __unused error, const char* __unused fmt, ...) {
+     if (error) fprintf(stderr, "; errno=%d [%s]", error, strerror(error));
+     putc('\n', stderr);
+     fflush(stderr);
+- 
+-     va_end(va);
+- #endif
+- }
++
++    va_end(va);
++}
+ 
+ // We care about enabling SSO on 64-bit platforms
+ // It turns out that our string implementation can SSO optimize 22 characters + (23rd) trailing NULL
+-- 
+2.53.0.windows.3
+

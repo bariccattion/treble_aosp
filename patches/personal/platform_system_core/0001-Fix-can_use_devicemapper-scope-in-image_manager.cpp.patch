@@ -1,0 +1,36 @@
+From 431c6c9891f6e735c11555b8a333e22bebe4431d Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 16:58:51 -0300
+Subject: [PATCH] Fix can_use_devicemapper scope in image_manager.cpp
+
+The revert of libfiemap loop mapping code re-introduces usage of
+can_use_devicemapper outside the #ifndef __ANDROID_RAMDISK__ block,
+but its declaration was inside. Move the declaration before the
+preprocessor block with a default value of true.
+---
+ fs_mgr/libfiemap/image_manager.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs_mgr/libfiemap/image_manager.cpp b/fs_mgr/libfiemap/image_manager.cpp
+index 253ea74..1f2d119 100644
+--- a/fs_mgr/libfiemap/image_manager.cpp
++++ b/fs_mgr/libfiemap/image_manager.cpp
+@@ -521,6 +521,7 @@ bool ImageManager::MapImageDevice(const std::string& name,
+         return false;
+     }
+ 
++    bool can_use_devicemapper = true;
+ #ifndef __ANDROID_RAMDISK__
+     auto image_header = GetImageHeaderPath(name);
+     if (access(image_header.c_str(), F_OK) == 0) {
+@@ -542,7 +543,6 @@ bool ImageManager::MapImageDevice(const std::string& name,
+         // If this logic sticks for a release, we can remove MapWithLoopDevice, as
+         // well as WrapUserdataIfNeeded in fs_mgr.
+         std::string block_device;
+-        bool can_use_devicemapper;
+         if (!FiemapWriter::GetBlockDeviceForFile(image_header, &block_device,
+                                                  &can_use_devicemapper)) {
+             LOG(ERROR) << "Could not determine block device for " << image_header;
+-- 
+2.53.0.windows.3
+

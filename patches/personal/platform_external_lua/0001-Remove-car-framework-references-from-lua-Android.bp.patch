@@ -1,0 +1,29 @@
+From a9983168f6bcd38ef06beb181eac06a45742201e Mon Sep 17 00:00:00 2001
+From: Bariccatti <bariccatti@gmail.com>
+Date: Sat, 25 Apr 2026 13:23:09 -0300
+Subject: [PATCH] Remove car framework references from lua Android.bp
+
+packages/services/Car is removed for GSI build. Remove com.android.car.framework from apex_available and Car visibility paths.
+---
+ Android.bp | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index f3d315e..7dfeddb 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -36,12 +36,9 @@ cc_library_static {
+     apex_available: [
+         "//apex_available:platform",
+         "com.android.extservices",
+-        "com.android.car.framework",
+     ],
+     visibility: [
+         "//external/libtextclassifier:__subpackages__",
+-        "//packages/services/Car/cpp/telemetry:__subpackages__",
+-        "//packages/services/Car/packages/ScriptExecutor:__subpackages__",
+     ],
+ }
+ 
+-- 
+2.53.0.windows.3
