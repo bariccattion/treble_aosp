@@ -19,7 +19,7 @@ Change-Id: If0eb969ba509981f9209ffa37a949d9042ef4c2a
  7 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/core/java/android/app/admin/SystemUpdateInfo.java b/core/java/android/app/admin/SystemUpdateInfo.java
-index 9e6c91f4ec31..7459b0e05e3a 100644
+index 9e6c91f4e..7459b0e05 100644
 --- a/core/java/android/app/admin/SystemUpdateInfo.java
 +++ b/core/java/android/app/admin/SystemUpdateInfo.java
 @@ -133,7 +133,7 @@ public final class SystemUpdateInfo implements Parcelable {
@@ -41,7 +41,7 @@ index 9e6c91f4ec31..7459b0e05e3a 100644
          }
          try {
 diff --git a/core/java/android/content/pm/PackagePartitions.java b/core/java/android/content/pm/PackagePartitions.java
-index ff80e614be58..da3b68ecf789 100644
+index ff80e614b..da3b68ecf 100644
 --- a/core/java/android/content/pm/PackagePartitions.java
 +++ b/core/java/android/content/pm/PackagePartitions.java
 @@ -131,7 +131,7 @@ public class PackagePartitions {
@@ -54,7 +54,7 @@ index ff80e614be58..da3b68ecf789 100644
      }
  
 diff --git a/services/appwidget/java/com/android/server/appwidget/AppWidgetXmlUtil.java b/services/appwidget/java/com/android/server/appwidget/AppWidgetXmlUtil.java
-index ce9130ad5cbf..737ecae1cc94 100644
+index ce9130ad5..737ecae1c 100644
 --- a/services/appwidget/java/com/android/server/appwidget/AppWidgetXmlUtil.java
 +++ b/services/appwidget/java/com/android/server/appwidget/AppWidgetXmlUtil.java
 @@ -117,7 +117,7 @@ public class AppWidgetXmlUtil {
@@ -76,10 +76,10 @@ index ce9130ad5cbf..737ecae1cc94 100644
          }
          final AppWidgetProviderInfo info = new AppWidgetProviderInfo();
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index b60812c1bb53..9e1843f3a91e 100644
+index 64a9381ad..2d9abbb2d 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -2244,7 +2244,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService
+@@ -2243,7 +2243,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService
              if (mIsUpgrade) {
                  PackageManagerServiceUtils.logCriticalInfo(Log.INFO,
                          "Upgrading from " + ver.fingerprint + " (" + ver.buildFingerprint + ") to "
@@ -88,7 +88,7 @@ index b60812c1bb53..9e1843f3a91e 100644
 +                                + " (" + Build.VERSION.INCREMENTAL + ")");
              }
              mPriorSdkVersion = mIsUpgrade ? ver.sdkVersion : -1;
-             mInitAppsHelper = new InitAppsHelper(this, mApexManager, mInstallPackageHelper,
+             mPriorSdkVersionFull = mIsUpgrade ? ver.sdkVersionFull : -1;
 @@ -2402,7 +2403,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService
                                          | Installer.FLAG_CLEAR_APP_DATA_KEEP_ART_PROFILES);
                      }
@@ -99,10 +99,10 @@ index b60812c1bb53..9e1843f3a91e 100644
              }
  
 diff --git a/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java b/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
-index 2714a7963b63..a07b37819b9d 100644
+index fbdf9af3d..121dc089d 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerServiceUtils.java
-@@ -1394,8 +1394,6 @@ public class PackageManagerServiceUtils {
+@@ -1332,8 +1332,6 @@ public class PackageManagerServiceUtils {
          // that starts with "eng." to signify that this is an engineering build and not
          // destined for release.
          if (isUserDebugBuild && incrementalVersion.startsWith("eng.")) {
@@ -111,7 +111,7 @@ index 2714a7963b63..a07b37819b9d 100644
              // Heuristic: If the /system directory has been modified recently due to an "adb sync"
              // or a regular make, then blow away the cache. Note that mtimes are *NOT* reliable
              // in general and should not be used for production changes. In this specific case,
-@@ -1403,6 +1401,7 @@ public class PackageManagerServiceUtils {
+@@ -1341,6 +1339,7 @@ public class PackageManagerServiceUtils {
              File frameworkDir =
                      new File(Environment.getRootDirectory(), "framework");
              if (cacheDir.lastModified() < frameworkDir.lastModified()) {
@@ -120,12 +120,12 @@ index 2714a7963b63..a07b37819b9d 100644
                  cacheDir = FileUtils.createDir(cacheBaseDir, cacheName);
              }
 diff --git a/services/core/java/com/android/server/pm/Settings.java b/services/core/java/com/android/server/pm/Settings.java
-index 92257f1ee2dd..bf226ca39054 100644
+index 960564b69..d4bc94593 100644
 --- a/services/core/java/com/android/server/pm/Settings.java
 +++ b/services/core/java/com/android/server/pm/Settings.java
-@@ -486,7 +486,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
-         public void forceCurrent() {
-             sdkVersion = Build.VERSION.SDK_INT;
+@@ -514,7 +514,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
+             }
+ 
              databaseVersion = CURRENT_DATABASE_VERSION;
 -            buildFingerprint = Build.FINGERPRINT;
 +            buildFingerprint = Build.VERSION.INCREMENTAL;
@@ -133,10 +133,10 @@ index 92257f1ee2dd..bf226ca39054 100644
          }
      }
 diff --git a/services/core/java/com/android/server/pm/ShortcutService.java b/services/core/java/com/android/server/pm/ShortcutService.java
-index 66e9e772e063..f539cc14845a 100644
+index 65ee4e7e7..be1b3c17f 100644
 --- a/services/core/java/com/android/server/pm/ShortcutService.java
 +++ b/services/core/java/com/android/server/pm/ShortcutService.java
-@@ -5089,7 +5089,7 @@ public class ShortcutService extends IShortcutService.Stub {
+@@ -5104,7 +5104,7 @@ public class ShortcutService extends IShortcutService.Stub {
  
      // Injection point.
      String injectBuildFingerprint() {
@@ -145,6 +145,3 @@ index 66e9e772e063..f539cc14845a 100644
      }
  
      // Injection point.
--- 
-2.43.0
-

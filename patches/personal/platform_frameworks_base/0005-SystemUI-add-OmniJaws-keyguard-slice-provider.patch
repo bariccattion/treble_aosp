@@ -130,10 +130,10 @@ Co-authored-by: rmp22 <195054967+rmp22@users.noreply.github.com>
  create mode 100644 core/java/com/android/internal/util/crdroid/OmniJawsClient.java
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index e7bca1419418..e2bba3be3d13 100644
+index 6c7279e74..c485cdcb1 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -6508,6 +6508,11 @@ public final class Settings {
+@@ -6710,6 +6710,11 @@ public final class Settings {
           * the setting value. See an example above.
           */
  
@@ -147,7 +147,7 @@ index e7bca1419418..e2bba3be3d13 100644
           * process when restoring historical backup datasets.
 diff --git a/core/java/com/android/internal/util/crdroid/OmniJawsClient.java b/core/java/com/android/internal/util/crdroid/OmniJawsClient.java
 new file mode 100644
-index 000000000000..60509ec40295
+index 000000000..60509ec40
 --- /dev/null
 +++ b/core/java/com/android/internal/util/crdroid/OmniJawsClient.java
 @@ -0,0 +1,383 @@
@@ -535,7 +535,7 @@ index 000000000000..60509ec40295
 +    }
 +}
 diff --git a/data/etc/com.android.systemui.xml b/data/etc/com.android.systemui.xml
-index 3eadf3b94515..f0714a630ec3 100644
+index b632df559..3abb812c4 100644
 --- a/data/etc/com.android.systemui.xml
 +++ b/data/etc/com.android.systemui.xml
 @@ -16,6 +16,7 @@
@@ -547,11 +547,11 @@ index 3eadf3b94515..f0714a630ec3 100644
          <permission name="android.permission.ALLOW_SLIPPERY_TOUCHES"/>
          <permission name="android.permission.BATTERY_STATS"/>
 diff --git a/packages/SystemUI/AndroidManifest.xml b/packages/SystemUI/AndroidManifest.xml
-index f628a420d8fa..a380f2a2025e 100644
+index 32ca087f9..c4bbd54f5 100644
 --- a/packages/SystemUI/AndroidManifest.xml
 +++ b/packages/SystemUI/AndroidManifest.xml
-@@ -404,6 +404,10 @@
-     <protected-broadcast android:name="com.android.systemui.action.ACTION_LAUNCH_MEDIA_OUTPUT_BROADCAST_DIALOG" />
+@@ -408,6 +408,10 @@
+     <protected-broadcast android:name="com.android.systemui.action.LAUNCH_SYSTEM_MEDIA_OUTPUT_DIALOG" />
      <protected-broadcast android:name="com.android.systemui.STARTED" />
  
 +    <!-- OmniJaws -->
@@ -559,10 +559,10 @@ index f628a420d8fa..a380f2a2025e 100644
 +    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 +
      <application
-         android:name=".SystemUIApplication"
+         android:name=".application.impl.SystemUIApplicationImpl"
          android:persistent="true"
 diff --git a/packages/SystemUI/src/com/android/keyguard/KeyguardSliceView.java b/packages/SystemUI/src/com/android/keyguard/KeyguardSliceView.java
-index 7b5325d4eaa6..130f984be3db 100644
+index 7b5325d4e..130f984be 100644
 --- a/packages/SystemUI/src/com/android/keyguard/KeyguardSliceView.java
 +++ b/packages/SystemUI/src/com/android/keyguard/KeyguardSliceView.java
 @@ -49,6 +49,7 @@ import com.android.internal.annotations.VisibleForTesting;
@@ -641,7 +641,7 @@ index 7b5325d4eaa6..130f984be3db 100644
              for (Drawable drawable : getCompoundDrawables()) {
                  if (drawable != null) {
 diff --git a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardSliceProvider.java b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardSliceProvider.java
-index 9ade5036b9a8..a732efe5eef6 100644
+index 8e04eee6c..830e185e1 100644
 --- a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardSliceProvider.java
 +++ b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardSliceProvider.java
 @@ -24,6 +24,7 @@ import android.content.ContentResolver;
@@ -670,17 +670,17 @@ index 9ade5036b9a8..a732efe5eef6 100644
 +import com.android.internal.util.crdroid.OmniJawsClient;
  import com.android.keyguard.KeyguardUpdateMonitor;
  import com.android.keyguard.KeyguardUpdateMonitorCallback;
- import com.android.systemui.SystemUIAppComponentFactoryBase;
-@@ -80,7 +84,7 @@ import javax.inject.Inject;
+ import com.android.systemui.application.ContentProviderContextAvailableCallback;
+@@ -81,7 +85,7 @@ import javax.inject.Inject;
  public class KeyguardSliceProvider extends SliceProvider implements
          NextAlarmController.NextAlarmChangeCallback, ZenModeController.Callback,
          NotificationMediaManager.MediaListener, StatusBarStateController.StateListener,
--        SystemUIAppComponentFactoryBase.ContextInitializer {
-+        SystemUIAppComponentFactoryBase.ContextInitializer, OmniJawsClient.OmniJawsObserver {
+-        ContentProviderContextInitializer {
++        ContentProviderContextInitializer, OmniJawsClient.OmniJawsObserver {
  
      private static final String TAG = "KgdSliceProvider";
  
-@@ -96,6 +100,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -97,6 +101,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
              "content://com.android.systemui.keyguard/media";
      public static final String KEYGUARD_ACTION_URI =
              "content://com.android.systemui.keyguard/action";
@@ -689,7 +689,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
  
      /**
       * Only show alarms that will ring within N hours.
-@@ -157,6 +163,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -158,6 +164,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
      @Background
      Handler mBgHandler;
  
@@ -701,7 +701,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
      /**
       * Receiver responsible for time ticking and updating the date format.
       */
-@@ -195,6 +206,34 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -196,6 +207,34 @@ public class KeyguardSliceProvider extends SliceProvider implements
                  }
              };
  
@@ -736,7 +736,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
      public static KeyguardSliceProvider getAttachedInstance() {
          return KeyguardSliceProvider.sInstance;
      }
-@@ -208,6 +247,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -209,6 +248,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
          mAlarmUri = Uri.parse(KEYGUARD_NEXT_ALARM_URI);
          mDndUri = Uri.parse(KEYGUARD_DND_URI);
          mMediaUri = Uri.parse(KEYGUARD_MEDIA_URI);
@@ -744,7 +744,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
      }
  
      @AnyThread
-@@ -219,14 +259,14 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -220,14 +260,14 @@ public class KeyguardSliceProvider extends SliceProvider implements
              synchronized (this) {
                  ListBuilder builder = new ListBuilder(getContext(), mSliceUri,
                          ListBuilder.INFINITY);
@@ -764,7 +764,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
                  slice = builder.build();
              }
          } catch (IllegalStateException e) {
-@@ -251,8 +291,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -252,8 +292,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
          if (TextUtils.isEmpty(mMediaTitle)) {
              return;
          }
@@ -778,7 +778,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
          if (!TextUtils.isEmpty(mMediaArtist)) {
              RowBuilder albumBuilder = new RowBuilder(mMediaUri);
              albumBuilder.setTitle(mMediaArtist);
-@@ -292,6 +335,17 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -293,6 +336,17 @@ public class KeyguardSliceProvider extends SliceProvider implements
          builder.addRow(alarmRowBuilder);
      }
  
@@ -796,7 +796,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
      /**
       * Add zen mode (DND) icon to slice if it's enabled.
       * @param builder The slice builder.
-@@ -342,6 +396,9 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -343,6 +397,9 @@ public class KeyguardSliceProvider extends SliceProvider implements
              KeyguardSliceProvider.sInstance = this;
              registerClockUpdate();
              updateClockLocked();
@@ -806,7 +806,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
          }
          return true;
      }
-@@ -358,6 +415,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
+@@ -359,6 +416,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
                  mKeyguardUpdateMonitor.removeCallback(mKeyguardUpdateMonitorCallback);
                  getContext().unregisterReceiver(mIntentReceiver);
              }
@@ -816,7 +816,7 @@ index 9ade5036b9a8..a732efe5eef6 100644
          }
      }
 @@ -560,4 +619,46 @@ public class KeyguardSliceProvider extends SliceProvider implements
-             SystemUIAppComponentFactoryBase.ContextAvailableCallback callback) {
+     public void setContextAvailableCallback(ContentProviderContextAvailableCallback callback) {
          mContextAvailableCallback = callback;
      }
 +
@@ -863,5 +863,5 @@ index 9ade5036b9a8..a732efe5eef6 100644
 +    }
  }
 -- 
-2.43.0
+2.53.0.windows.3
 
