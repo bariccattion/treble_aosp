@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remove-project name="device/amlogic/yukawa" />
-  <remove-project name="device/amlogic/yukawa-kernel" />
-  <remove-project name="device/google/atv" />
-  <remove-project name="device/google/common/etm" />
-  <remove-project name="device/google/contexthub" />
-  <remove-project name="device/google/trout" />
-  <remove-project name="device/google_car" />
-  <remove-project name="device/linaro/dragonboard" />
-  <remove-project name="device/linaro/dragonboard-kernel" />
-  <remove-project name="device/linaro/hikey" />
-  <remove-project name="device/linaro/hikey-kernel" />
-  <remove-project name="platform/hardware/invensense" />
-  <remove-project name="platform/hardware/nxp/keymint" />
-  <remove-project name="platform/hardware/nxp/nfc" />
-  <remove-project name="platform/hardware/nxp/secure_element" />
-  <remove-project name="platform/hardware/nxp/uwb" />
-  <remove-project name="platform/hardware/nxp/weaver" />
-  <remove-project name="platform/hardware/qcom/wlan" />
-  <remove-project name="platform/hardware/samsung/nfc" />
-  <remove-project name="platform/hardware/st/secure_element" />
-  <remove-project name="platform/hardware/st/secure_element2" />
-  <remove-project name="platform/hardware/synaptics/wlan" />
-  <remove-project name="platform/hardware/ti/am57x" />
-  <remove-project name="platform/prebuilts/bazel/darwin-x86_64" />
-  <remove-project name="platform/prebuilts/clang/host/darwin-x86" />
-  <remove-project name="platform/prebuilts/go/darwin-x86" />
+
+  <!-- Android TV / Automotive (default.xml) -->
+  <remove-project path="device/google/atv" />
+  <remove-project path="device/google_car" />
+  <remove-project path="device/google/trout" />
+  <remove-project path="device/generic/car" />
+
+  <!-- ============================================================ -->
+  <!-- Android Automotive OS (default.xml)                          -->
+  <!-- ============================================================ -->
+
+  <remove-project path="packages/apps/Car/CalendarPrebuilt" />
+  <remove-project path="packages/apps/Car/Cluster" />
+  <remove-project path="packages/apps/Car/DebuggingRestrictionController" />
+  <remove-project path="packages/apps/Car/DialerPrebuilt" />
+  <remove-project path="packages/apps/Car/DriverUIPrebuilt" />
+  <remove-project path="packages/apps/Car/LatinIME" />
+  <remove-project path="packages/apps/Car/Launcher" />
+  <remove-project path="packages/apps/Car/LinkViewer" />
+  <remove-project path="packages/apps/Car/LocalMediaPlayer" />
+  <remove-project path="packages/apps/Car/MediaPrebuilt" />
+  <remove-project path="packages/apps/Car/MessengerPrebuilt" />
+  <remove-project path="packages/apps/Car/Notification" />
+  <remove-project path="packages/apps/Car/Provision" />
+  <remove-project path="packages/apps/Car/RadioPrebuilt" />
+  <remove-project path="packages/apps/Car/References" />
+  <remove-project path="packages/apps/Car/RotaryController" />
+  <remove-project path="packages/apps/Car/RotaryImePrebuilt" />
+  <remove-project path="packages/apps/Car/Settings" />
+  <remove-project path="packages/apps/Car/SettingsIntelligence" />
+  <remove-project path="packages/apps/Car/systemlibs" />
+  <remove-project path="packages/apps/Car/SystemUI" />
+  <remove-project path="packages/apps/Car/SystemUpdater" />
+  <remove-project path="packages/apps/Car/Templates" />
+  <remove-project path="packages/apps/Car/VoiceControl" />
+  <remove-project path="packages/apps/Car/DataSubscriptionReference" />
+
+  <!-- Car services, tests, and dependencies (depends on removed Car packages) -->
+  <remove-project path="packages/services/Car" />
+  <remove-project path="frameworks/opt/car/setupwizard" />
+
+  <!-- Automotive hardware interfaces and tools (depends on removed Car packages) -->
+  <!-- Note: hardware/interfaces/automotive removed from AOSP manifest, using patches instead -->
+
 </manifest>
